@@ -22,8 +22,8 @@ from cross_view_transformer.callbacks.visualization_callback import Visualizatio
 
 log = logging.getLogger(__name__)
 
-CONFIG_PATH = '/home/ln/code/bev_vit/config'
-#CONFIG_PATH = Path.cwd() / 'config'                 #这个执行的路径和需求路径在执行时不同
+CONFIG_PATH = '/home/ln/code/bev/config'
+#CONFIG_PATH = Path.cwd() / 'config'
 CONFIG_NAME = 'config.yaml'
 
 # print(CONFIG_PATH)
@@ -80,15 +80,13 @@ def main(cfg):
                          **cfg.trainer)
     # print("########################训练000")
     #print("ckpt_path111111111111111111111111111111111111",ckpt_path)
-    #print("ckpt_path111111111111111111111111111111111111",model_module)
-    #print("ckpt_path111111111111111111111111111111111111",data_module)
+
     #print("ckpt***********8",ckpt_path)
     os.environ['WANDB_API_KEY'] = 'KEY'
     os.environ['WANDB_MODE'] = 'offline'
     trainer.fit(model_module, datamodule=data_module, ckpt_path=ckpt_path)   #使用 trainer.fit() 函数，模型的实际训练开始。
     #print("ckpt***********8",ckpt_path)
-    #print("ckpt_path222222222222222222222222222222222222", ckpt_path)                                                                        # trainer.fit(model) model.save_to(config.save_to)
-    #rint("########################训练111") #从训练中提取最佳检查点的路径；您可以将其更新到任何检查点。
+
     # checkpoint_path = trainer.checkpoint_callback.best_model_path
     # 创建评估模型并加载检查点。
     # eval_model = nemo_nlp.models.TextClassificationModel.load_from_checkpoint(checkpoint_path=checkpoint_path)

@@ -51,7 +51,7 @@ def run_fake(data, model, optim, viz_func):
                 yield np.vstack(viz_func(**output))
 
 CONFIG_PATH = '/home/ln/code/cross_view_transformers/config'
-#@hydra.main(config_path=Path.cwd() / 'config', config_name='config.yaml')
+
 @hydra.main(config_path=CONFIG_PATH, config_name='config.yaml')
 def main(cfg: DictConfig):
     setup_config(cfg, setup)  #导入配置文件

@@ -3,7 +3,7 @@ num_classes: 12                         # do not modify :)
 
 # used to get_split
 version: 'v1.0-trainval'                # 'v1.0-mini' for debugging
-dataset_dir: /media/ln/Data02/NUSCENES/occ_data/data/nuscenes
+dataset_dir: /media/ln/Data02/NUSCENES/data/data/nuscenes
 labels_dir: /media/ln/Data02/NUSCENES/datasets/labels_nuscenes
 
 # used to generate dataset

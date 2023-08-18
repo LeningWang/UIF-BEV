@@ -226,7 +226,7 @@ class DirectionCrossAttention(nn.Module):
 
         q2 = q[:, 1:2, :, :]  # 第12维度的第一层数据作为替换数据
         q2[:, 1:, :, :] = q2  # 将替换数据赋值给第12维度的第二层
-        '''
+
         q3 = q[:, 2:3, :, :]  # 第12维度的第一层数据作为替换数据
         q3[:, 1:, :, :] = q3  # 将替换数据赋值给第12维度的第二层
 
@@ -238,30 +238,30 @@ class DirectionCrossAttention(nn.Module):
 
         q6 = q[:, 5:6, :, :]  # 第12维度的第一层数据作为替换数据
         q6[:, 1:, :, :] = q6  # 将替换数据赋值给第12维度的第二层
-        '''
+
 
 
         # Group the head dim with batch dim
         q1 = rearrange(q1, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
         q2 = rearrange(q2, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
-        '''
+
         q3 = rearrange(q3, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
         q4 = rearrange(q4, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
         q5 = rearrange(q5, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
         q6 = rearrange(q6, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
-        '''
+
         k = rearrange(k, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
         v = rearrange(v, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
 
         # Dot product attention along cameras
         dot1 = self.scale * torch.einsum('b n Q d, b n K d -> b n Q K', q1, k)
         dot2 = self.scale * torch.einsum('b n Q d, b n K d -> b n Q K', q2, k)
-        '''
+
         dot3 = self.scale * torch.einsum('b n Q d, b n K d -> b n Q K', q3, k)
         dot4 = self.scale * torch.einsum('b n Q d, b n K d -> b n Q K', q4, k)
         dot5 = self.scale * torch.einsum('b n Q d, b n K d -> b n Q K', q5, k)
         dot6 = self.scale * torch.einsum('b n Q d, b n K d -> b n Q K', q6, k)
-        '''
+
         dotk1=dot1+dot2
         #dotk1=dot1+dot2+dot3+dot4+dot5+dot6
 
@@ -330,7 +330,7 @@ class TrackingCrossAttention(nn.Module):
         q = self.to_q(q)                                # b n (H W) (heads dim_head)
         k = self.to_k(k)                                # b n (h w) (heads dim_head)
         v = self.to_v(v)                                # b (n h w) (heads dim_head)
-        print("ttttttttttttttttttttttt")
+
         print(k.size())
         print(v.size())
         print(q.size())
@@ -344,7 +344,6 @@ class TrackingCrossAttention(nn.Module):
         q2 = q2.expand(1, 12, -1, -1)
         print(q1.size())
 
-        '''
         q3 = q[:, 2:3, :, :]  # 第12维度的第一层数据作为替换数据
         q3[:, 1:, :, :] = q3  # 将替换数据赋值给第12维度的第二层
 
@@ -356,7 +355,7 @@ class TrackingCrossAttention(nn.Module):
 
         q6 = q[:, 5:6, :, :]  # 第12维度的第一层数据作为替换数据
         q6[:, 1:, :, :] = q6  # 将替换数据赋值给第12维度的第二层
-        '''
+
 
         k1 = k[:, 0:1, :, :]  # 第12维度的第一层数据作为替换数据
         k1[:, 1:, :, :] = k1  # 将替换数据广播到第12维度的其余层
@@ -368,12 +367,12 @@ class TrackingCrossAttention(nn.Module):
         # Group the head dim with batch dim
         q1 = rearrange(q1, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
         q2 = rearrange(q2, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
-        '''
+
         q3 = rearrange(q3, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
         q4 = rearrange(q4, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
         q5 = rearrange(q5, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
         q6 = rearrange(q6, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
-        '''
+
         k1 = rearrange(k1, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
         k2 = rearrange(k2, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
         v = rearrange(v, 'b ... (m d) -> (b m) ... d', m=self.heads, d=self.dim_head)
@@ -381,12 +380,12 @@ class TrackingCrossAttention(nn.Module):
         # Dot product attention along cameras
         dot1 = self.scale * torch.einsum('b n Q d, b n K d -> b n Q K', q1, k1)
         dot2 = self.scale * torch.einsum('b n Q d, b n K d -> b n Q K', q2, k2)
-        '''
+
         dot3 = self.scale * torch.einsum('b n Q d, b n K d -> b n Q K', q3, k)
         dot4 = self.scale * torch.einsum('b n Q d, b n K d -> b n Q K', q4, k)
         dot5 = self.scale * torch.einsum('b n Q d, b n K d -> b n Q K', q5, k)
         dot6 = self.scale * torch.einsum('b n Q d, b n K d -> b n Q K', q6, k)
-        '''
+
         dotk1=dot1+dot2
         #dotk1=dot1+dot2+dot3+dot4+dot5+dot6
 
@@ -786,7 +785,7 @@ class Encoder(nn.Module):
         x = repeat(x, '... -> b ...', b=b)      # 1,128,25,25         # b d H W
 
         for cross_view, feature, layer, direction,tracking in zip(self.cross_views, features, self.layers,self.direction,self.tracking):
-            #print("layerrrrrrrrrrrrrrrrrrrrrr",self.layers)
+
             feature = rearrange(feature, '(b n) ... -> b n ...', b=b, n=n)
             y = direction(x, self.bev_embedding, feature, I_inv, E_inv)
             z = tracking(x, self.bev_embedding, feature, I_inv, E_inv)

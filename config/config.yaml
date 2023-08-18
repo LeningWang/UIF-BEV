@@ -1,7 +1,7 @@
 defaults:
   - _self_
 
-  - model: cvt    # 所使用的模型
+  - model: uif    # 所使用的模型
   - data: nuscenes_road
   - visualization: null
 

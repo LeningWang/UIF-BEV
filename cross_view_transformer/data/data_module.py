@@ -3,12 +3,12 @@ import pytorch_lightning as pl
 
 from . import get_dataset_module_by_name
 
-# 处理数据！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！11
-class DataModule(pl.LightningDataModule):         # 这个是数据处理的接口入口
+# 处理数据！！！！！！！！！！！！！！！
+class DataModule(pl.LightningDataModule):
     def __init__(self, dataset: str, data_config: dict, loader_config: dict):
         super().__init__()
 
-        self.get_data = get_dataset_module_by_name(dataset).get_data  #得到数据 得到的应该是处理好的数据
+        self.get_data = get_dataset_module_by_name(dataset).get_data
 
         self.data_config = data_config           # 数据集配置
         self.loader_config = loader_config        # 导入配置文件
@@ -28,10 +28,8 @@ class DataModule(pl.LightningDataModule):         # 这个是数据处理的接�
 
         return torch.utils.data.DataLoader(dataset, shuffle=shuffle, **loader_config)
 
-    def train_dataloader(self, shuffle=False):  # 模型训练 数据导入
-        #print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+    def train_dataloader(self, shuffle=False):
         return self.get_split('train', loader=True, shuffle=shuffle)
 
-    def val_dataloader(self, shuffle=False):   # 模型验证 数据导入
-        #print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+    def val_dataloader(self, shuffle=False):
         return self.get_split('val', loader=True, shuffle=shuffle)

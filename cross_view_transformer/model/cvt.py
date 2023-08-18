@@ -3,7 +3,7 @@ import os
 
 
 
-class CrossViewTransformer(nn.Module):   # cvt模型
+class CrossViewTransformer(nn.Module):
     def __init__(
         self,
         encoder, #_target_: cross_view_transformer.model.encoder.Encoder

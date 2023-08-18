@@ -83,9 +83,7 @@ class ModelModule(pl.LightningModule):  #  从这里开始看！！！！,这里
         self.metrics.reset()
 
     def _enable_dataloader_shuffle(self, dataloaders):
-        """
-        HACK for https://github.com/PyTorchLightning/pytorch-lightning/issues/11054
-        """
+
         for v in dataloaders:
             v.sampler.shuffle = True
             # v.sampler.shuffle = False

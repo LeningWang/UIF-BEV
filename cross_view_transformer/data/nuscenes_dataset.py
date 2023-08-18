@@ -14,7 +14,7 @@ from .transforms import Sample, SaveDataTransform
 
 STATIC = ['lane', 'road_segment'] # 静态数据
 DIVIDER = ['road_divider', 'lane_divider'] # 分割数据 道路分割，标线分割
-DYNAMIC = [                                # 动态数据 xxx
+DYNAMIC = [                                # 动态数据
     'car', 'truck', 'bus',
     'trailer', 'construction',
     'pedestrian',

@@ -3,7 +3,7 @@ import torch
 
 from pathlib import Path
 from .common import get_split
-from .transforms import Sample, LoadDataTransform  # 注意 这里导入了sample
+from .transforms import Sample, LoadDataTransform
 
 
 def get_data(
@@ -61,10 +61,9 @@ class NuScenesGeneratedDataset(torch.utils.data.Dataset):
             #print(type(data01))
             #print("auxxxxxxx",data01['aux'])
 
-            data = self.transform(data01)   # 将转化后的数据，输出到这里！！！！！！111
+            data = self.transform(data01)
 
-            data02 = self.transform(data02)   # 将转化后的数据，输出到这里！！！！！！111
-
+            data02 = self.transform(data02)
             #data["image"]=torch.cat([data["image"],data02["image"]],1)
             #data["image"]=data["image"]+data02["image"]
             ######data["bev"]=data["bev"]+data02["bev"]
@@ -79,20 +78,5 @@ class NuScenesGeneratedDataset(torch.utils.data.Dataset):
 
 
             
-           # data["bev"]=data02["bev"]
 
-
-            #data["bev"]=torch.cat([data["bev"],data02["bev"]],0)
-
-            #data["visibility"]=torch.cat([data["visibility"],data02["visibility"]],0)
-            
-            #data["pose"]=torch.cat([data["pose"],data02["pose"]],0)
-            #print(66)
-            #data['cam_channels']=data['cam_channels']+data02['cam_channels']
-            ##################
-            #print(data01.cam_idx)
-            #print(6)
-
-            #print(type(data01))
-            #data={"data01":data01,"data02":data02}
         return data
