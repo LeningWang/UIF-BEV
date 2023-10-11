@@ -179,6 +179,27 @@ class CrossAttention(nn.Module):
 
         return z
 
+class MLP(nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim, num_layers):
+        super(MLP, self).__init__()
+        self.input_dim = input_dim
+        self.hidden_dim = hidden_dim
+        self.output_dim = output_dim
+        self.num_layers = num_layers
+
+        layers = []
+        dims = [input_dim] + [hidden_dim] * num_layers + [output_dim * output_dim]
+        for i in range(len(dims) - 1):
+            layers.append(nn.Linear(dims[i], dims[i + 1]))
+            layers.append(nn.ReLU())
+        self.mlp = nn.Sequential(*layers)
+
+    def forward(self, x):
+        out = self.mlp(x)
+        return out.view(x.size(0), x.size(1), self.output_dim, self.output_dim)
+
+
+
 
 
 
@@ -585,6 +606,22 @@ class Direction(nn.Module):
         pixel_flat = rearrange(pixel, '... h w -> ... (h w)')  # 1 1 3 (h w)
         cam = I_inv @ pixel_flat  # b n 3 (h w)
         cam = F.pad(cam, (0, 0, 0, 1, 0, 0, 0, 0), value=1)  # b n 4 (h w)
+
+
+        '''        hidden_dim = 512
+        output_dim = 4
+        num_layers = 4
+        mlp = MLP(4 * 4, hidden_dim, output_dim, num_layers).to("cuda")
+        input_data = E_inv             
+        print("E_inv", E_inv.size())
+        input_data = input_data.reshape(1, 6, 4 * 4) 
+        output = mlp(input_data)
+        print("out",output.shape) 
+        #E_inv=output+E_inv
+        #E_inv=output+E_inv'''
+
+
+        
         d = E_inv @ cam  # b n 4 (h w)
         d_flat = rearrange(d, 'b n d (h w) -> (b n) d h w', h=h, w=w)  # (b n) 4 h w
         d_embed = self.img_embed(d_flat)  # (b n) d h w
